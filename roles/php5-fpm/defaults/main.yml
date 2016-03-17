@@ -1,0 +1,2 @@
+# available variants php55w, php56w, php70w
+php_version: "php70w"

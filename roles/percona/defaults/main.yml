@@ -1,0 +1,26 @@
+percona_user_home: /root
+percona_root_username: root
+percona_root_password: root
+
+percona_databases:
+  - name: wordpress
+    # collation: utf8_general_ci
+    encoding: utf8
+
+# percona_users:
+#   - name: wordpress
+#     host: 192.168.33.%
+#     password: wordpress
+#     priv: wordpress.*:ALL
+
+percona_user_name: wordpress
+percona_user_password: wordpress
+percona_user_priv: wordpress.*:ALL
+percona_user_host:
+  - 127.0.0.1
+  - 192.168.33.10
+  - 192.168.33.11
+  - 192.168.33.12
+  - 192.168.33.13
+  - 192.168.33.14
+  - localhost

@@ -1,0 +1,8 @@
+nginx_user: "nginx"
+nginx_worker_processes: auto
+nginx_worker_connections: "1024"
+
+nginx_upstream: "upstream php {\n    server unix:/var/run/php-fpm/wordpress.sock;\n}"
+nginx_listen: "80"
+nginx_server_name: "localhost"
+nginx_root: "/srv/wordpress"

@@ -1,0 +1,44 @@
+- name: PHP-FPM | Installing epel repo rpm
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  ignore_errors: yes
+
+- name: PHP-FPM | Installing webtatic repo rpm
+  yum:
+    name: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+  ignore_errors: yes
+
+- name: PHP-FPM | Install php-fpm and deps 
+  yum: name={{ item }} state=present
+  with_items:
+    - "{{ php_version }}"
+    - "{{ php_version }}-fpm"
+    - "{{ php_version }}-enchant"
+    # - php-IDNA_Convert - 
+    - "{{ php_version }}-mbstring"
+    - "{{ php_version }}-mysql"
+    # - php-PHPMailer - 
+    - "{{ php_version }}-opcache"
+    - "{{ php_version }}-process"
+    # - php-simplepie -
+    - "{{ php_version }}-xml"
+
+- name: PHP-FPM | Enable php-fpm
+  service:
+    name: php-fpm
+    enabled: yes
+
+- name: PHP-FPM | Disable default pool
+  command: mv /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.disabled creates=/etc/php-fpm.d/www.disabled
+  notify: restart php-fpm
+
+- name: PHP-FPM | Copy php.ini configuration
+  template:
+    src: php.ini.j2
+    dest: /etc/php.ini
+
+- name: PHP-FPM | Copy php-fpm configuration
+  template:
+    src: wordpress.conf.j2
+    dest: /etc/php-fpm.d/wordpress.conf
+  notify: restart php-fpm

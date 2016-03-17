@@ -1,0 +1,27 @@
+{{ nginx_upstream }}
+#upstream myapp {
+#        server 192.168.33.11;
+#        server 192.168.33.12 backup;
+#    }
+
+server {
+	listen {{ nginx_listen }} default_server;
+	root /var/www/html;
+
+	# Add index.php to the list if you are using PHP
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name {{ nginx_server_name }};
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		proxy_set_header X-Real-IP  $remote_addr;
+	    proxy_set_header Host $http_host;
+	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_pass http://myapp/;
+		#Try this settings
+		#proxy_redirect off;
+	}
+
+}

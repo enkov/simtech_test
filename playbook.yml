@@ -1,0 +1,28 @@
+- name: Install db
+  hosts: db
+  remote_user: vagrant
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+    - { role: percona }
+
+- name: Install app
+  hosts: app
+  remote_user: vagrant
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+    - { role: wordpress }
+    - { role: php5-fpm }
+    - { role: nginx }
+
+- name: Install web
+  hosts: web
+  remote_user: vagrant
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+    - { role: nginx_proxy }
