@@ -73,4 +73,4 @@ Please see the file called LICENSE.
 
 ### Author Information
 ---
-This roles was created by Petr Enkov(peter@mail.ru).
+This roles was created by Petr Enkov(petere@mail.ru).
