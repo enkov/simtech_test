@@ -1,4 +1,8 @@
-{{ nginx_upstream }}
+upstream {{ upstream_name }} {
+{% for upstream in upstream_srv %}
+    server {{ upstream }};
+{% endfor %}
+   }
 
 server {
     listen       {{ nginx_listen }};
@@ -29,7 +33,7 @@ server {
             include fastcgi_params;
             fastcgi_intercept_errors on;
             fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-            fastcgi_pass php;
+            fastcgi_pass {{ upstream_name }};
     }
 
     location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
